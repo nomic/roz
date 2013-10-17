@@ -31,44 +31,85 @@ rozed.get("/posts", ...)
 
 ### The Roz Grammar
 
-A rozed route supports a function-based grammar for building middleware rules.  It's a good idea to just
-import all the grammar functions so your authorization rules read better:
+A rozed route supports a function-based grammar for building middleware rules. It's a good idea to just import all the grammar functions so your authorization rules read better:
 
 ```js
-var roz = require("roz");
-    grant = roz.grant, where = roz.where, anyone = roz.anyone, actor = roz.actor
+var roz = require("roz"),
+    grant = roz.grant,
+    where = roz.where,
+    anyone = roz.anyone,
+    actor = roz.actor
 
-...
+```
+
+Give anyone access to this route.  Authentication not even required.
+
+```js
 rozed.get( "/posts",
-           roz( where ( anyone )),
-           fn )
-...
+           roz( grant ( anyone )),
+           ... )
+```
+
+Only let authenticated users create a post.
+
+```js
 var someone = function(req) { return req.isAuthenticated(); }
 
 rozed.post( "/posts",
-            roz( where ( someone )),
-            fn )
+            roz( grant ( someone )),
+            ... )
+```js
 
-...
-var isAdmin = function(user) { return user.admin === true; }
+Use "where" to glue in a more specific rule.  For this example, only
+an admin is allowed to edit posts.
 
-rozed.post( "/posts/:id",
-            roz( where ( isAdmin( actor ))),
-            fn )
+```js
+var isAdmin = function(user, cb) { cb(null, user.admin === true)};
 
-...
-var isAdmin = function(user) { return user.admin === true; }
+rozed.patch( "/posts/:id",
+             roz( grant( where ( isCreator, actor, "id" ))),
+             ... )
+
+```
+
+Only the an admin or the creator can delete a post.
+
+```js
+
+var isCreator = function(user, postId, cb) { ... };
 
 rozed.delete( "/posts/:id",
-            roz( where ( isCreator( actor, "id" ))),
-            fn )
+              roz( grant( where ( isCreator, actor, "id" ))
+                   grant( where ( isAdmin, actor ))),
+              ... )
+```
+
+
+"revoke" can be used to deny access.
+
+```js
+
+var isCreator = function(user, postId, cb) { ... };
+
+rozed.delete( "/posts/:id",
+              roz( grant( where ( isCreator, actor, "id" ))
+                   grant( where ( isAdmin, actor ))
+                   revoke( where ( deletedToMuch, actor)) ),
+              ... )
+```
+
+If you don't add a roz statement to a route, you'll get an exception
+when you startup your express app.
+
+```
+rozed.put( "/posts/:id",
+           ... )
+
 
 ```
 
 
-
-roz( fn, [fn*] )
-----------------
+### roz( fn, [fn*] )
 roz returns a middleware function that will return 403 or allow routing to proceed depending on whether or
 not its argument functions grant's access.
 
@@ -84,4 +125,3 @@ rozed.get( "/user",
 ```
 
 The ```roz``` function returns middleware.  It accepts a spl
-

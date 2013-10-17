@@ -49,7 +49,7 @@ module.exports = function(opts) {
             wrapped[method] = function() {
                 var middleware = _.rest(arguments);
                 if (! _.some(middleware, isRozMiddleware)) {
-                    throw new Error( "Roz: naked routes not allowed: " +
+                    throw new Error( "Roz: route has no roz statement: " +
                                      method + " " + _.first(arguments));
                 }
                 orig.apply(app, _.toArray(arguments));
