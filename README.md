@@ -96,20 +96,3 @@ rozed.put( "/posts/:id",
 09:36:01 app  | Error: Roz: route does not include a roz statement: put /post/:id
 
 ```
-
-### roz( fn, [fn*] )
-roz returns a middleware function that will return 403 or allow routing to proceed depending on whether or
-not its argument functions grant's access.
-
-grant( fn )
-
-### roz
-Let's grant anyone access to a route:
-
-```js
-rozed.get( "/user",
-           roz( grant( anyone )),
-           ... )
-```
-
-The ```roz``` function returns middleware.  It accepts a spl
