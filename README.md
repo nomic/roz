@@ -19,7 +19,7 @@ var rozed = roz.wrap(app);
 app = null
 ```
 
-Now call any of the routing methods just like you would on app.  The ```express-namespace``` module is
+Now call any of the routing methods just like you would on app.  "namespace" The ```express-namespace``` module is
 also supported.
 ```js
 rozed.get("/posts", ...)
