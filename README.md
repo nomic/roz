@@ -35,7 +35,7 @@ var roz = require("roz"),
     anyone = roz.anyone
 ```
 
-Give anyone access to this route.  Authentication not even required.
+Give anyone including anonymous users access to a route:
 ```js
 rozed.get( "/posts",
            roz( grant ( anyone )),
