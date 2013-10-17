@@ -1,6 +1,6 @@
 {
   "name": "roz",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simple, expressive, whitelist authorization for express",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nomic/roz/issues"
+  },
+  "dependencies": {
+    "async": "0.2.9",
+    "underscore": "1.5.1"
   }
 }
