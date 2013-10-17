@@ -63,7 +63,7 @@ module.exports = function(opts) {
 
     var param = function(req, p) {
         if (opts.lookin) return req[opts.lookin][p];
-        return req[p];
+        return req.param(p);
     };
 
 
