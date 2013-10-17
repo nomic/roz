@@ -1,6 +1,6 @@
 roz
 ===
-Simple, expressive, white-list authorization for express.js
+Simple, expressive, whitelist authorization for express.js
 
 ![The Roz Headshot](roz-night-court.jpg) 
 
