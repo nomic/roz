@@ -127,10 +127,11 @@ default, so at least one `grant` must fire.
 `where` is a helper that applies a function (your authorization rule) to
 variables extracted from the request.  Each `reqAccessor` can either be a
 string or a function.  If it is a string, `where` will use it as an arg to
-`req.param()`.  If `reqAccessor` is a function it is called with the
-request and expected to return a value.  The values are then passed into `ruleFn`.
+`req.param()`.  If `reqAccessor` is a function, it is called with the
+request and expected to return a value.  The values are then passed into `ruleFn`,
+which should return true or false.
 
-Note: if you want to look up variables from a custom object on `req`, e.g.,
+If you want to look up variables from a custom object on `req`, e.g.,
 `req.validated`, and do not want to use `req.param()`, initialize
 roz like this:
 ```
