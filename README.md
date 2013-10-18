@@ -88,7 +88,7 @@ var actor = function(req) { return req.user; }
 var isAdmin = function(user, cb) { cb(null, user.admin === true)};
 
 rozed.patch( "/posts/:id",
-             roz( grant( where ( isAdmin, actor, "id" ))),
+             roz( grant( where ( isAdmin, actor ))),
              ... )
 ```
 
