@@ -2,9 +2,9 @@ roz
 ===
 Simple, expressive, whitelist authorization for express.js.
 
-<img src="https://raw.github.com/nomic/roz/master/roz-night-court.jpg"
+[<img src="https://raw.github.com/nomic/roz/master/roz-night-court.jpg"
      alt="The Roz Headshot"
-     height="300px"/> 
+     height="300px"/>](http://www.imdb.com/title/tt0086770/)
 
 Why?
 ====
