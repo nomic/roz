@@ -31,9 +31,10 @@ var rozed = roz.wrap(app);
 app = null  // Recommended to prevent accidental use
 ```
 
-`rozed` is a thin wrapper around app.  Ccall any of the express app routing
-methods on it.  (`namespace` from the `express-namespace` module is also supported.)
-This rozed router demands that you include roz middleware in your routes.  So
+`rozed` is a thin wrapper around app.  Call any of the express app routing
+methods on it.  `namespace` from the `express-namespace` module is also supported.
+
+The rozed router demands that you include roz middleware in your routes.  So
 if you forget:
 ```js
 rozed.get( "/posts/:id", doStuff )
