@@ -109,7 +109,7 @@ to denied.
 rozed.del( "/posts/:id",
            roz( grant( where ( isCreator, actor, "id" ))
                 grant( where ( isAdmin, actor ))
-                revoke( where ( deletedToMuchAlready, actor)) ),
+                revoke( where ( deletedTooMuchAlready, actor ))),
            ... )
 ```
 
