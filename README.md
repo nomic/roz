@@ -19,7 +19,7 @@ difference between authentication and authorization is,
 
 How?
 ====
-Get a rozzed router by using ```roz.wrap()``` on the express app.  Note
+Get a rozzed router by using `roz.wrap()` on the express app.  Note
 that first you need to *call* the roz module to get a functioning
 roz (this is to support an option explained later);
 ```js
@@ -29,8 +29,8 @@ var rozed = roz.wrap(app);
 app = null  // Recommended to prevent accidental use
 ```
 
-Now call any of the express app routing methods on ```rozed```, which is a
-simple wrapper around app.  ```namespace``` from the ```express-namespace``
+Now call any of the express app routing methods on `rozed`, which is a
+simple wrapper around app.  `namespace` from the `express-namespace`
 module is also supported.  This rozed router will demand that you include roz
 middleware in your routes.  So if you forget to include it:
 ```js
@@ -71,7 +71,7 @@ rozed.post( "/posts",
             ... )
 ```
 
-Note in the above you need to define ```someone``` yourself.  Roz is agnostic to
+Note in the above you need to define `someone` yourself.  Roz is agnostic to
 whatever your authentication scheme is so you'll need to provide that check.  As
 above, that's generally pretty easy.
 
@@ -101,7 +101,7 @@ rozed.delete( "/posts/:id",
               ... )
 ```
 
-If a grant fires, a subsequent ```revoke``` can flip authorization back
+If a grant fires, a subsequent `revoke` can flip authorization back
 to denied.
 ```js
 rozed.delete( "/posts/:id",
@@ -115,21 +115,21 @@ A Little More Detail
 ====================
 
 ### roz(grant|revoke [, grant|revoke*])
-```roz``` expects one or more ```grant``` or ```revoke``` statements.  ```grant```
-and ```revoke``` take a request object and a callback.  ```grant``` will callback
-with *true* (grant access) or *null* (unchanged), and ```revoke``` will callback with
+`roz` expects one or more `grant` or `revoke` statements.  `grant`
+and `revoke` take a request object and a callback.  `grant` will callback
+with *true* (grant access) or *null* (unchanged), and `revoke` will callback with
 *false* (revoke access) or *null* (unchanged).  Access will be denied by roz by
 default, so at least one grant must fire.
 
 ### where(ruleFn [, reqAccessor*])
-```where``` is a helper that applies a function (your authorization rule) to
-variables extracted from the request.  Each ```reqAccessors``` can either be a
-string or a function.  If it is a string, ```where``` will use it an arg to
-```req.param()```.  If ```reqAccessor``` is a function it is called with the
-request and expected to return a value.  The values are then passed into ```ruleFn```.
+`where` is a helper that applies a function (your authorization rule) to
+variables extracted from the request.  Each `reqAccessors` can either be a
+string or a function.  If it is a string, `where` will use it an arg to
+`req.param()`.  If `reqAccessor` is a function it is called with the
+request and expected to return a value.  The values are then passed into `ruleFn`.
 
-Note: if you want to look up variables from a custom object on ```req```, e.g.,
-```req.validated```, and do not want to use ```req.param()```, initialize
+Note: if you want to look up variables from a custom object on `req`, e.g.,
+`req.validated`, and do not want to use `req.param()`, initialize
 roz like this:
 ```
 var roz = require("roz")({lookin:"validated"})
