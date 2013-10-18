@@ -36,9 +36,8 @@ Now call any of the routing methods just like you would on the express app.
 rozed.get("/posts", ...)
 ```
 
-The rozed router will demand that you include roz middleware in your route,
-explained in just a moment.  If you do not, you will get an error like this when
-you start your express app:
+The rozed router will demand that you include roz middleware in your route.
+If you do not, you will get an error like this when you start your express app:
 
 ```js
 rozed.get( "/posts/:id", doStuff )
