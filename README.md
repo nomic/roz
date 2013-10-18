@@ -98,19 +98,19 @@ Only the admin or the creator can delete a post.
 var isCreator = function(user, postId, cb) { ... };
 
 rozed.del( "/posts/:id",
-              roz( grant( where ( isCreator, actor, "id" ))
-                   grant( where ( isAdmin, actor ))),
-              ... )
+           roz( grant( where ( isCreator, actor, "id" ))
+                grant( where ( isAdmin, actor ))),
+           ... )
 ```
 
 If a `grant` fires, a subsequent `revoke` can flip authorization back
 to denied.
 ```js
 rozed.del( "/posts/:id",
-              roz( grant( where ( isCreator, actor, "id" ))
-                   grant( where ( isAdmin, actor ))
-                   revoke( where ( deletedToMuchAlready, actor)) ),
-              ... )
+           roz( grant( where ( isCreator, actor, "id" ))
+                grant( where ( isAdmin, actor ))
+                revoke( where ( deletedToMuchAlready, actor)) ),
+           ... )
 ```
 
 A Little More Detail
