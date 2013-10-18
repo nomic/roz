@@ -29,15 +29,10 @@ var rozed = roz.wrap(app);
 app = null  // Recommended to prevent accidental use
 ```
 
-Now call any of the routing methods just like you would on the express app.
-```namespace``` from the ```express-namespace``` module is also supported.
-
-```js
-rozed.get("/posts", ...)
-```
-
-The rozed router will demand that you include roz middleware in your route.
-So if you forget to include it:
+Now call any of the express app routing methods on ```rozed```, which is a
+simple wrapper around app.  ```namespace``` from the ```express-namespace``
+module is also supported.  This rozed router will demand that you include roz
+middleware in your routes.  So if you forget to include it:
 ```js
 rozed.get( "/posts/:id", doStuff )
 ```
