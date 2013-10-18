@@ -1,48 +1,74 @@
 roz
 ===
-Simple, expressive, white-list authorization for express.js
+Simple, expressive, whitelist authorization for express.js.
 
-![The Roz Headshot](roz-night-court.jpg) 
+![The Roz Headshot](https://raw.github.com/nomic/roz/master/roz-night-court.jpg)
 
 Why?
 ====
-I wanted to glue authorization functions in front of my routes.  I didn't want RBAC, I just wanted to be
-confident that rules were in front of my routes and that the default for a route was 403.
+I wanted authorization functions in front of my routes.  I didn't want RBAC
+or anything opinionated about how my rules should be modeled.  I just wanted:
+
+* To remove boilerplate
+* To make intended rules clear
+* To be defensive: whitelist approach where default is 403
+
+Roz is about authorization, not authentication.  If you're not sure what the
+difference between authentication and authorization is,
+[read this](http://en.wikipedia.org/wiki/Authentication#Authorization).
 
 How?
 ====
-Get a rozzed router by calling the wrap method on the express app:
+Get a rozzed router by calling ```roz.wrap()``` on the express app.  Note
+that you need to call the roz module when you require it to get a functioning
+roz (this is to support an option explained later);
 ```js
 var roz = require("roz")();
 var rozed = roz.wrap(app);
-// Good idea to make sure you don't use the naked app by mistake
-app = null
+
+app = null  // Recommended to prevent accidental use
 ```
 
-Now call any of the routing methods just like you would on app.  "namespace" The ```express-namespace``` module is
-also supported.
+Now call any of the routing methods just like you would on the express app.
+```namespace``` from the ```express-namespace``` module is also supported.
+
 ```js
 rozed.get("/posts", ...)
 ```
 
+The rozed router will demand that you include roz middleware in your route,
+explained in just a moment.  If you do not, you will get an error like this when
+you start your express app:
+
+```js
+rozed.get( "/posts/:id", doStuff )
+```
+```bash
+09:36:01 app  | Error: Rozed route does not have a roz expression: get /posts/:id
+```
+
+
 ### The Roz Grammar
 
-A rozed route supports a function-based grammar for building middleware rules. It's a good idea to just import all the grammar functions so your authorization rules read better:
+Roz has a function-based grammar for building middleware rules. It's a good
+idea to just import all the grammar functions so your authorization rules
+read better:
 ```js
 var roz = require("roz"),
     grant = roz.grant,
+    revoke = roz.revoke, // You likely won't need this one
     where = roz.where,
     anyone = roz.anyone
 ```
 
-Give anyone access to this route.  Authentication not even required.
+Here's how to give anyone, including unauthenticated users, access to a route.
 ```js
 rozed.get( "/posts",
            roz( grant ( anyone )),
            ... )
 ```
 
-Only let authenticated users create a post.
+If you only want to let authenticated users do something:
 ```js
 var someone = function(req) { return req.isAuthenticated(); }
 
@@ -50,6 +76,14 @@ rozed.post( "/posts",
             roz( grant ( someone )),
             ... )
 ```
+
+Note in the above you need to define ```someone``` yourself.  Roz is agnostic to
+whatever your authentication scheme is so you'll need to provide that check.  As
+above, that's generally pretty easy.
+
+Also note that roz emits 403's.  If authentication is required and you want to
+return a 401, you'll need to handle that before getting to the roz middleware.
+
 
 Use "where" to glue in a more specific rule.  For this example, only
 an admin is allowed to edit posts.
@@ -62,7 +96,7 @@ rozed.patch( "/posts/:id",
              ... )
 ```
 
-Only the an admin or the creator can delete a post.
+Only the admin or the creator can delete a post.
 ```js
 
 var isCreator = function(user, postId, cb) { ... };
@@ -73,42 +107,40 @@ rozed.delete( "/posts/:id",
               ... )
 ```
 
-
-"revoke" can be used to deny access.
+If a grant fires, a subsequent ```revoke``` can flip authorization back
+to denied.
 ```js
-
-var isCreator = function(user, postId, cb) { ... };
-
 rozed.delete( "/posts/:id",
               roz( grant( where ( isCreator, actor, "id" ))
                    grant( where ( isAdmin, actor ))
-                   revoke( where ( deletedToMuch, actor)) ),
+                   revoke( where ( deletedToMuchAlready, actor)) ),
               ... )
 ```
 
-If you don't add a roz statement to a route, you'll get an exception
-when you startup your express app.
-```js
-rozed.put( "/posts/:id",
-           ... )
-```
-```bash
-09:36:01 app  | Error: Roz: route does not include a roz statement: put /post/:id
-
-```
+A Little More Detail
+====================
 
 ### roz(grant|revoke [, grant|revoke*])
-```roz``` expects one or more ```grant``` or ```revoke``` statements.  grant and revoke take a request
-and callback with true (grant access) revoke (deny access) or null (unchanged).  Access is denied by
-default.
+```roz``` expects one or more ```grant``` or ```revoke``` statements.  ```grant```
+and ```revoke``` take a request object and a callback.  ```grant``` will callback
+with *true (grant access) or null (unchanged), and ```revoke``` will callback with
+false (revoke access) or null (unchanged).  Access will be denied by roz by
+default, so at least one grant must fire.
 
-### where(fn [, reqAccessor*])
-```where``` is a helper that applies a function to variables extracted from the request.
-The ```reqAccessors``` can either be a string or a function.  If it is a string, ```where``` will
-call req.param(<string>).  If ```reqAccessor```, is a function it is called with the request and expected
-to return a value.
+### where(ruleFn [, reqAccessor*])
+```where``` is a helper that applies a function (your authorization rule) to
+variables extracted from the request.  Each ```reqAccessors``` can either be a
+string or a function.  If it is a string, ```where``` will use it an arg to
+```req.param()```.  If ```reqAccessor``` is a function it is called with the
+request and expected to return a value.  The values are then passed into
+```ruleFn```.
 
-Note: if you want to look in a location other than "req.param()", initialize roz like this:
+Note: if you want to look up variables from a custom object on req, e.g.,
+```req.validated```, and do not want to use ```req.param()```, initialize
+roz like this:
 ```
-var roz = require("roz")({lookin:"parsed"})
+var roz = require("roz")({lookin:"validated"})
 ```
+
+Roz is about 100 lines of code.  Give her a read if you've still got questions.
+

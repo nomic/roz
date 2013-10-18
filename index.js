@@ -16,21 +16,21 @@ module.exports = function(opts) {
     var roz = function(/* rules... */) {
         var rules = _.toArray(arguments);
         var midware = function(req, res, next) {
-            var authenticated = false;
+            var authorized = false;
             async.series(
                 _.map(rules, function(rule) {
                     return function(cb) {
                         rule(req, function(err, result) {
                             if (err) return cb(err);
-                            if (result === true) authenticated = true;
-                            if (result === false) authenticated = false;
+                            if (result === true) authorized = true;
+                            if (result === false) authorized = false;
                             return cb(null);
                         });
                     };
                 }),
                 function(err) {
                     if (err) return next(err);
-                    if (! authenticated ) {
+                    if (! authorized ) {
                         return res.send(403);
                     }
                     return next();
@@ -49,7 +49,7 @@ module.exports = function(opts) {
             wrapped[method] = function() {
                 var middleware = _.rest(arguments);
                 if (! _.some(middleware, isRozMiddleware)) {
-                    throw new Error( "Roz: route has no roz statement: " +
+                    throw new Error( "Roz: route does not have a roz expression: " +
                                      method + " " + _.first(arguments));
                 }
                 orig.apply(app, _.toArray(arguments));
@@ -60,38 +60,6 @@ module.exports = function(opts) {
         }
         return wrapped;
     };
-
-    var param = function(req, p) {
-        if (opts.lookin) return req[opts.lookin][p];
-        return req.param(p);
-    };
-
-
-    //
-    // Predicates
-    //
-    roz.where = function(fn /*, params */) {
-        var params = _.toArray(arguments).slice(1);
-        return function(req, cb) {
-            fn.apply(
-                null,
-                _.map(params, function(p) {
-                    if (_.isString(p)) return param(req, p);
-                    if (_.isFunction(p)) return p.call(null, req);
-                    assert(false, "Expected string or function: " + p.toString());
-                }).concat([
-                    function(err, result) {
-                        if (err) return cb(err);
-                        cb(null, result);
-                    }
-                ])
-            );
-        };
-    };
-
-    //
-    // Directives
-    //
 
     roz.grant = function(reqPredicate) {
         return function(req, cb) {
@@ -111,12 +79,32 @@ module.exports = function(opts) {
         };
     };
 
-    //
-    // Helpers
-    //
-
     roz.anyone = function(req, cb) {
         return cb(null, true);
+    };
+
+    var param = function(req, p) {
+        if (opts.lookin) return req[opts.lookin][p];
+        return req.param(p);
+    };
+
+    roz.where = function(fn /*, params */) {
+        var params = _.toArray(arguments).slice(1);
+        return function(req, cb) {
+            fn.apply(
+                null,
+                _.map(params, function(p) {
+                    if (_.isString(p)) return param(req, p);
+                    if (_.isFunction(p)) return p.call(null, req);
+                    assert(false, "Expected string or function: " + p.toString());
+                }).concat([
+                    function(err, result) {
+                        if (err) return cb(err);
+                        cb(null, result);
+                    }
+                ])
+            );
+        };
     };
 
     return roz;
