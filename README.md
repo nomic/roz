@@ -76,11 +76,11 @@ Note in the above you need to define `someone` yourself.  Roz is agnostic to
 whatever your authentication scheme is so you'll need to provide that check.  As
 above, that's generally pretty easy.
 
-Also note that roz emits 403's.  If authentication is required and you want to
+Also note that roz emits 403s.  If authentication is required and you want to
 return a 401, you'll need to handle that before getting to the roz middleware.
 
 
-Use "where" to glue in a more specific rule.  For this example, only
+Use `where` to glue in a more specific rule.  For this example, only
 an admin is allowed to edit posts.
 ```js
 var actor = function(req) { return req.user; }
@@ -102,7 +102,7 @@ rozed.del( "/posts/:id",
               ... )
 ```
 
-If a grant fires, a subsequent `revoke` can flip authorization back
+If a `grant` fires, a subsequent `revoke` can flip authorization back
 to denied.
 ```js
 rozed.del( "/posts/:id",
