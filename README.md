@@ -123,8 +123,8 @@ A Little More Detail
 ### roz(grant|revoke [, grant|revoke*])
 ```roz``` expects one or more ```grant``` or ```revoke``` statements.  ```grant```
 and ```revoke``` take a request object and a callback.  ```grant``` will callback
-with *true (grant access) or null (unchanged), and ```revoke``` will callback with
-false (revoke access) or null (unchanged).  Access will be denied by roz by
+with *true* (grant access) or *null* (unchanged), and ```revoke``` will callback with
+*false* (revoke access) or *null* (unchanged).  Access will be denied by roz by
 default, so at least one grant must fire.
 
 ### where(ruleFn [, reqAccessor*])
