@@ -2,7 +2,9 @@ roz
 ===
 Simple, expressive, whitelist authorization for express.js.
 
-![The Roz Headshot](https://raw.github.com/nomic/roz/master/roz-night-court.jpg)
+<img src="https://raw.github.com/nomic/roz/master/roz-night-court.jpg"
+     alt="The Roz Headshot"
+     height="300px"/> 
 
 Why?
 ====
@@ -29,10 +31,10 @@ var rozed = roz.wrap(app);
 app = null  // Recommended to prevent accidental use
 ```
 
-Now call any of the express app routing methods on `rozed`, which is a
-simple wrapper around app.  `namespace` from the `express-namespace`
-module is also supported.  This rozed router will demand that you include roz
-middleware in your routes.  So if you forget to include it:
+`rozed` is a thin wrapper around app.  Ccall any of the express app routing
+methods on it.  (`namespace` from the `express-namespace` module is also supported.)
+This rozed router demands that you include roz middleware in your routes.  So
+if you forget:
 ```js
 rozed.get( "/posts/:id", doStuff )
 ```
@@ -40,7 +42,6 @@ You'll get an error like this:
 ```bash
 09:36:01 app  | Error: Rozed route does not have a roz expression: get /posts/:id
 ```
-
 
 ### The Roz Grammar
 
