@@ -37,11 +37,11 @@ rozed.get("/posts", ...)
 ```
 
 The rozed router will demand that you include roz middleware in your route.
-If you do not, you will get an error like this when you start your express app:
-
+So if you forget to include it:
 ```js
 rozed.get( "/posts/:id", doStuff )
 ```
+You'll get an error like this:
 ```bash
 09:36:01 app  | Error: Rozed route does not have a roz expression: get /posts/:id
 ```
