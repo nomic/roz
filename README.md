@@ -8,7 +8,7 @@ Simple, expressive, whitelist authorization for express.js.
 
 Why?
 ====
-I wanted authorization functions in front of my routes.  I didn't want RBAC
+I wanted authorization functions at the front of my routes.  I didn't want RBAC
 or anything opinionated about how my rules should be modeled.  I just wanted:
 
 * To make intended rules clear
