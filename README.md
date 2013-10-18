@@ -120,12 +120,12 @@ A Little More Detail
 and `revoke` take a request object and a callback.  `grant` will callback
 with *true* (grant access) or *null* (unchanged), and `revoke` will callback with
 *false* (revoke access) or *null* (unchanged).  Access will be denied by roz by
-default, so at least one grant must fire.
+default, so at least one `grant` must fire.
 
 ### where(ruleFn [, reqAccessor*])
 `where` is a helper that applies a function (your authorization rule) to
-variables extracted from the request.  Each `reqAccessors` can either be a
-string or a function.  If it is a string, `where` will use it an arg to
+variables extracted from the request.  Each `reqAccessor` can either be a
+string or a function.  If it is a string, `where` will use it as an arg to
 `req.param()`.  If `reqAccessor` is a function it is called with the
 request and expected to return a value.  The values are then passed into `ruleFn`.
 
