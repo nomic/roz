@@ -21,7 +21,7 @@ difference between authentication and authorization is,
 
 How?
 ====
-Get a rozzed router by using `roz.wrap()` on the express app.  Note
+Get a rozed router by using `roz.wrap()` on the express app.  Note
 that first you need to *call* the roz module to get a functioning
 roz (this is to support an option explained later);
 ```js
