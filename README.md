@@ -9,9 +9,9 @@ Why?
 I wanted authorization functions in front of my routes.  I didn't want RBAC
 or anything opinionated about how my rules should be modeled.  I just wanted:
 
-* To remove boilerplate
 * To make intended rules clear
-* To be defensive: whitelist approach where default is 403
+* To be defensive: have a whitelist approach where default is 403
+* To remove boilerplate (and silly mistakes)
 
 Roz is about authorization, not authentication.  If you're not sure what the
 difference between authentication and authorization is,
