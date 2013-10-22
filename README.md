@@ -88,7 +88,7 @@ var actor = function(req) { return req.user; }
 var isAdmin = function(user, cb) { cb(null, user.admin === true)};
 
 rozed.patch( "/posts/:id",
-             roz( grant( where ( isAdmin, actor, "id" ))),
+             roz( grant( where ( isAdmin, actor ))),
              ... )
 ```
 
@@ -109,7 +109,7 @@ to denied.
 rozed.del( "/posts/:id",
            roz( grant( where ( isCreator, actor, "id" ))
                 grant( where ( isAdmin, actor ))
-                revoke( where ( deletedToMuchAlready, actor)) ),
+                revoke( where ( deletedTooMuchAlready, actor ))),
            ... )
 ```
 
@@ -128,8 +128,8 @@ default, so at least one `grant` must fire.
 variables extracted from the request.  Each `reqAccessor` can either be a
 string or a function.  If it is a string, `where` will use it as an arg to
 `req.param()`.  If `reqAccessor` is a function, it is called with the
-request and expected to return a value.  The values are then passed into `ruleFn`,
-which should return true or false.
+request and expected to return a value.  The values are then passed into `ruleFn`
+allong with a callback which should be called with true or false.
 
 If you want to look up variables from a custom object on `req`, e.g.,
 `req.validated`, and do not want to use `req.param()`, initialize
