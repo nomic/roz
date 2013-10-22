@@ -90,6 +90,7 @@ module.exports = function(opts) {
 
     roz.where = function(fn /*, params */) {
         var params = _.toArray(arguments).slice(1);
+        assert(_.isFunction(fn), "Non function passed to where: " + fn);
         return function(req, cb) {
             fn.apply(
                 null,
