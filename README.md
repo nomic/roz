@@ -21,14 +21,19 @@ difference between authentication and authorization is,
 
 How?
 ====
-Get a rozed router by using `roz.wrap()` on the express app.  Note
-that first you need to *call* the roz module to get a functioning
-roz (this is to support an option explained later);
 ```js
 var roz = require("roz")();  // The roz module is a callable -- call it
-var rozed = roz.wrap(app);
+var rozed = roz.wrap(app);   // app is your express app
 
 app = null  // Recommended to prevent accidental use
+
+var isCreator = function(user, postId, cb) { ... };
+
+rozed.del( "/posts/:id",
+           roz( grant( where ( isCreator, actor, "id" ))
+                grant( where ( isAdmin, actor ))),
+           ... )
+
 ```
 
 `rozed` is a thin wrapper around app.  Call any of the express app routing
