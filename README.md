@@ -15,9 +15,9 @@ or anything opinionated about how my rules should be modeled, I just wanted:
 * To be defensive: have a whitelist approach where default is 403
 * To remove boilerplate (and silly mistakes)
 
-Roz is about authorization, not authentication.  If you're not sure what the
-difference between authentication and authorization is,
-[read this](http://en.wikipedia.org/wiki/Authentication#Authorization).
+Roz is about authorization, not authentication.  If you're not sure about the
+difference between authentication and authorization, [wikipedia](http://en.wikipedia.org/wiki/Authentication#Authorization)
+gives a good explanation.
 
 How?
 ====
