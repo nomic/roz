@@ -36,7 +36,7 @@ rozed.del( "/posts/:id",
 
 ```
 
-*rozed* is a thin wrapper around app.  Call any of the express app routing
+*rozed* is a thin wrapper around *app*.  Call any of the express app routing
 methods on it.  *namespace* from the *express-namespace* module is also supported.
 
 The rozed router demands that you include roz middleware in your routes.  So
