@@ -36,8 +36,8 @@ rozed.del( "/posts/:id",
 
 ```
 
-`rozed` is a thin wrapper around app.  Call any of the express app routing
-methods on it.  `namespace` from the `express-namespace` module is also supported.
+*rozed* is a thin wrapper around app.  Call any of the express app routing
+methods on it.  *namespace* from the *express-namespace* module is also supported.
 
 The rozed router demands that you include roz middleware in your routes.  So
 if you forget:
@@ -78,7 +78,7 @@ rozed.post( "/posts",
             ... )
 ```
 
-Note in the above you need to define `someone` yourself.  Roz is agnostic to
+Note in the above you need to define *someone* yourself.  Roz is agnostic to
 whatever your authentication scheme is so you'll need to provide that check.  As
 above, that's generally pretty easy.
 
@@ -134,14 +134,14 @@ Access will be denied by roz by default, so at least one `grant` must fire.
 `where` is a helper that applies a function (your authorization rule) to
 variables extracted from the request.  Each *reqAccessor* can either be a
 string or a function.  If it is a string, `where` will use it as an arg to
-`req.param()`.  If *reqAccessor* is a function, the function is called with the
+*req.param()*.  If *reqAccessor* is a function, the function is called with the
 request and expected to return a value.
 
 Once extracted, the values are passed to to the *ruleFn* with a callback which
 should be called with true or false (or an error).
 
-If you want to look up variables from a custom object on `req`, e.g.,
-`req.validated`, and do not want to use `req.param()`, initialize
+If you want to look up variables from a custom location on *req*, e.g.,
+*req.validate*, and do not want to use *req.param()*, initialize
 roz like this:
 ```
 var roz = require("roz")({lookin:"validated"})
