@@ -53,7 +53,7 @@ You'll get an error:
 
 ### The Roz Grammar
 
-Roz has a function-based grammar for building middleware rules. It's a good
+Roz has a short, function-based grammar for building middleware rules. It's a good
 idea to just import all the grammar functions so your authorization rules
 read better:
 ```js
