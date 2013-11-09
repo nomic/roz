@@ -137,11 +137,12 @@ string or a function.  If it is a string, `where` will use it as an arg to
 *req.param()*.  If *reqAccessor* is a function, the function is called with the
 request and expected to return a value.
 
-Once extracted, the values are passed to to the *ruleFn* with a callback which
+Once extracted, the values are passed to the *ruleFn* with a callback which
 should be called with *true* or *false* (or an error).
 
-If you want to look up variables from a custom location on *req*, e.g.,
-*req.validate*, and do not want to use *req.param()*, initialize
+### require("./roz")(options)
+If you want to look up variables for your where clauses from a custom location
+on *req*, e.g., *req.validate*, and do not want to use *req.param()*, initialize
 roz like this:
 ```
 var roz = require("roz")({lookin:"validated"})
