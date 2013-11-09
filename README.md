@@ -141,12 +141,12 @@ Once extracted, the values are passed to the *ruleFn* with a callback which
 should be called with *true* or *false* (or an error).
 
 ### require("roz")(options)
-If you want to look up variables for your where clauses from a custom location
-on *req*, e.g., *req.validate*, and do not want to use *req.param()*, initialize
-roz like this:
+If you do not want to look up variables for your where clauses with *req.param()*,
+you can specify an alternative location on *req*, e.g., *req.validate*, like this:
 ```
 var roz = require("roz")({lookin:"validated"})
 ```
 
+### More Questions?
 Roz is about 100 lines of code.  Give her a read if have more questions.
 
