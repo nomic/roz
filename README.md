@@ -39,7 +39,7 @@ rozed.del( "/posts/:id",
 *rozed* is a thin wrapper around *app*.  Call any of the express app routing
 methods on it.  *namespace* from the *express-namespace* module is also supported.
 
-The rozed router demands that you include at least one `roz` middleware in your route.  So
+The rozed router demands that you include at least one `roz` statement in your route.  So
 if you forget, say like this:
 ```js
 rozed.get( "/posts/:id", doStuff )
