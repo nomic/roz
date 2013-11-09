@@ -148,5 +148,5 @@ var roz = require("roz")({lookin:"validated"})
 ```
 
 ### More Questions?
-Roz is about 100 lines of code.  Give her a read if have more questions.
+Roz is about 100 lines of code.  Please give her a read.
 
