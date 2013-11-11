@@ -31,35 +31,40 @@ rozed.del( "/posts/:id",
                 grant( where ( isAdmin, actor ))),
            ... );
 
+
+function isAdmin(user, cb) { cb(null, user.admin === true) }
 function isCreator(user, postId, cb) { ... }
-function isAdmin(user, cb) { ... }
 ```
 
 *rozed* is a thin wrapper around *app*.  Call any of the express app routing
 methods on it.  *namespace* from the *express-namespace* module is also supported.
 
 If a grant does not fire, a 403 will be returned and the middleware after the
-roz statement will not be called.
+roz statement will not be called.  Notize that roz just provides the middleware
+glue, and you can implement your custom rules in plain old javascript functions
+like *isCreator* and *isAdmin* above.
 
-Additionally, the rozed router demands that you include at least one `roz` statement in
-any route you declare.  So, if you forget, like this:
+Roz is defensive.  In addition to defaulting to 403, rozed routers demands that you
+include at least one `roz` statement in any route you declare.  So, if you forget,
+like this:
+
 ```js
 rozed.get( "/posts/:id", doStuff )
 ```
-You'll get an error:
+You'll get an error when you try to start your express app:
 ```bash
 09:36:01 app  | Error: Rozed route does not have a roz rule: get /posts/:id
 ```
 
 ### The Roz Grammar
 
-Roz has a short, function-based grammar for building middleware rules. It's a good
+Roz has a short, function-based grammar for inserting middleware rules. It's a good
 idea to just import all the grammar functions so your authorization rules
 read better:
 ```js
 var roz = require("roz"),
     grant = roz.grant,
-    revoke = roz.revoke, // You likely won't need this one
+    revoke = roz.revoke, // Since "denied" is the default, you likely won't need this
     where = roz.where,
     anyone = roz.anyone
 ```
@@ -121,16 +126,6 @@ rozed.del( "/posts/:id",
 A Little More Detail
 ====================
 
-### roz(grant(...)|revoke(...) [,grant(...)|revoke(...)*])
-`roz` expects one or more `grant` or `revoke` statements.  Alternatively,
-`grant` and `revoke` can be replaced by any function with this signature:
-fn(req, callback), where the callback takes err then result.  The result
-is *true*, *false* or *null*.
-
-`grant` calls back with *true* (grant access) or *null* (unchanged),
-and `revoke` calls back with *false* (revoke access) or *null*.
-Access is denied by default, so at least one *true* must be returned.
-
 ### where(ruleFn [, reqAccessor*])
 `where` applies a plain old javascript function, *ruleFn*, to data in the request.  You
 specify the *ruleFn*, and then, for each argument,
@@ -140,6 +135,15 @@ is called with the request and expected to return a value.
 
 Once extracted, the values are passed to the *ruleFn* along with a callback that
 should be called with *true* or *false* (or an error).
+
+### roz(grant(...)|revoke(...) [,grant(...)|revoke(...)*])
+`roz` expects one or more `grant` or `revoke` statements.  Alternatively,
+`grant` and `revoke` can be replaced by any function with this signature:
+fn(req, callback), where the callback takes err then result.  The result
+should be *true* (grant access), *false* (revoke access) or *null* (unchanged).
+
+`grant` calls back with *true* or *null*, and `revoke` calls back with *false*
+or *null*. Access is denied by default, so at least one *true* must be returned.
 
 ### require("roz")(options)
 If you do not want to use *req.param()* to look up arguments for your where clauses,
