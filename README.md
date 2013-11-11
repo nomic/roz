@@ -122,13 +122,13 @@ A Little More Detail
 ====================
 
 ### roz(grant(...)|revoke(...) [,grant(...)|revoke(...)*])
-`roz` expects one or more `grant` or `revoke` statements.  `grant`
-and `revoke` can be any function with this signature:
+`roz` expects one or more `grant` or `revoke` statements.  Alternatively,
+`grant` and `revoke` can be replaced by any function with this signature:
 fn(req, callback), where the callback takes err then result.
 
 `grant` calls back with *true* (grant access) or *null* (unchanged),
 and `revoke` calls back with *false* (revoke access) or *null* (unchanged).
-Access is denied by default, so at least one `grant` must fire.
+Access is denied by default, so at least one *true* must be returned.
 
 ### where(ruleFn [, reqAccessor*])
 `where` applies a plain old javascript function (*ruleFn*) to data in the request.  You
