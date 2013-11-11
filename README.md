@@ -128,7 +128,7 @@ fn(req, callback), where the callback takes err then result.  The result
 is *true*, *false* or *null*.
 
 `grant` calls back with *true* (grant access) or *null* (unchanged),
-and `revoke` calls back with *false* (revoke access) or *null* (unchanged).
+and `revoke` calls back with *false* (revoke access) or *null*.
 Access is denied by default, so at least one *true* must be returned.
 
 ### where(ruleFn [, reqAccessor*])
