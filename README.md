@@ -132,7 +132,7 @@ and `revoke` calls back with *false* (revoke access) or *null*.
 Access is denied by default, so at least one *true* must be returned.
 
 ### where(ruleFn [, reqAccessor*])
-`where` applies a plain old javascript function (*ruleFn*) to data in the request.  You
+`where` applies a plain old javascript function, *ruleFn*, to data in the request.  You
 specify the *ruleFn*, and then for each argument,
 a *reqAccessor* for getting data from the request.  If a *reqAccessor* is a string, `where`
 will use it as an arg to *req.param()*.  If *reqAccessor* is a function, the function
