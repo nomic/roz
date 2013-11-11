@@ -42,7 +42,7 @@ If a grant does not fire, a 403 will be returned and the middleware after the
 roz statement will not be called.
 
 Additionally, the rozed router demands that you include at least one `roz` statement in
-any route you declare.  So if you forget, like this:
+any route you declare.  So, if you forget, like this:
 ```js
 rozed.get( "/posts/:id", doStuff )
 ```
