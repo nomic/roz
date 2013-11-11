@@ -15,6 +15,7 @@ module.exports = function(opts) {
     opts = opts || {};
     var roz = function(/* rules... */) {
         var rules = _.toArray(arguments);
+
         var midware = function(req, res, next) {
             var authorized = false;
             async.series(
@@ -22,21 +23,21 @@ module.exports = function(opts) {
                     return function(cb) {
                         rule(req, function(err, result) {
                             if (err) return cb(err);
+                            // default is to leave authorization unchanged
                             if (result === true) authorized = true;
-                            if (result === false) authorized = false;
-                            return cb(null);
+                            else if (result === false) authorized = false;
+                            return cb();
                         });
                     };
                 }),
                 function(err) {
                     if (err) return next(err);
-                    if (! authorized ) {
-                        return res.send(403);
-                    }
-                    return next();
+                    if (authorized) return next();
+                    return res.send(403);
                 }
             );
         };
+
         midware[ROZ_MIDDLEWARE_KEY] = true;
         return midware;
     };
