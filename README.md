@@ -87,9 +87,8 @@ above, that's generally pretty easy.
 Also note that roz emits 403s.  If authentication is required and you want to
 return a 401, you'll need to handle that before getting to the roz middleware.
 
-
-Use `where` to glue in a more specific rule.  For this example, only
-an admin is allowed to edit posts.
+Use `where` for more specific rules.  In the next example, only an admin
+is allowed to edit posts.
 ```js
 var actor = function(req) { return req.user; }
 var isAdmin = function(user, cb) { cb(null, user.admin === true)};
@@ -99,7 +98,7 @@ rozed.patch( "/posts/:id",
              ... )
 ```
 
-Only the admin or the creator can delete a post.
+Here, only the admin or the creator can delete a post.
 ```js
 
 var isCreator = function(user, postId, cb) { ... };
@@ -125,21 +124,21 @@ A Little More Detail
 
 ### roz(grant(...) | revoke(...) [grant(...) | revoke(...),* ] )
 `roz` expects one or more `grant` or `revoke` statements.  `grant`
-and `revoke` can be replaced with any funciton with this signature:
-fn(req, callback), where the callback is your typical fn(err, result).
+and `revoke` can be any function with this signature:
+fn(req, callback), where the callback takes err then result.
 
 `grant` calls back with *true* (grant access) or *null* (unchanged),
 and `revoke` calls back with *false* (revoke access) or *null* (unchanged).
-Access will be denied by roz by default, so at least one `grant` must fire.
+Access is denied by default, so at least one `grant` must fire.
 
 ### where(ruleFn [, reqAccessor*])
-`where` is a helper that applies a function (your authorization rule) to
-variables extracted from the request.  Each *reqAccessor* can either be a
-string or a function.  If it is a string, `where` will use it as an arg to
-*req.param()*.  If *reqAccessor* is a function, the function is called with the
-request and expected to return a value.
+`where` applies a plain old javascript function (*ruleFn*) to data in the request.  You
+specify the *ruleFn*, and then for each argument,
+a *reqAccessor* for getting data from the request.  If a *reqAccessor* is a string, `where`
+will use it as an arg to *req.param()*.  If *reqAccessor* is a function, the function
+is called with the request and expected to return a value.
 
-Once extracted, the values are passed to the *ruleFn* with a callback which
+Once extracted, the values are passed to the *ruleFn* along with a callback which
 should be called with *true* or *false* (or an error).
 
 ### require("roz")(options)
