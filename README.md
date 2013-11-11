@@ -142,7 +142,7 @@ should be called with *true* or *false* (or an error).
 
 ### require("roz")(options)
 If you do not want to look up variables for your where clauses with *req.param()*,
-you can specify an alternative location on *req*, e.g., *req.validate*, like this:
+you can specify an alternative location on *req*, e.g., *req.validated*, like this:
 ```
 var roz = require("roz")({lookin:"validated"})
 ```
