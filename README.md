@@ -46,7 +46,7 @@ function isCreator(user, postId, cb) { ... }
 methods on it.  *namespace* from the *express-namespace* module is also supported.
 
 If a grant does not fire, a 403 will be returned and the middleware after the
-roz statement will not be called.  Notice that roz just provides the middleware
+roz statement will not be called.  Notice that roz just provides middleware
 glue.  You implement custom rules in plain old javascript functions
 like the *isAdmin* and *isCreator* examples.
 
