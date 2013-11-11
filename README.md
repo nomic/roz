@@ -24,7 +24,7 @@ How?
 ```js
 var roz = require("roz")();  // The roz module is a callable -- call it
 
-var rozed = roz.wrap(app);   // app is your express app
+var rozed = roz.wrap(app);   // wrap your express app
 app = null  // Recommended to prevent accidental use
 
 rozed.del( "/posts/:id",
