@@ -1,6 +1,6 @@
 roz
 ===
-Simple, expressive, whitelist authorization for express.js.
+Simple, expressive and defensive authorization for express.js.
 
 [<img src="https://raw.github.com/nomic/roz/master/roz-night-court.jpg"
      alt="The Roz Headshot"
@@ -11,9 +11,8 @@ Why?
 I wanted authorization functions at the front of my routes.  I didn't want RBAC
 or anything opinionated about how my rules should be modeled, I just wanted:
 
-* To make rules clear
-* To be defensive: have a whitelist approach where default is 403
-* To remove boilerplate (and silly mistakes)
+* Clear rules without boiler plate
+* A whitelist approach where the default is 403
 
 Roz is about authorization, not authentication.  If you're not sure about the
 difference between authentication and authorization, [wikipedia](http://en.wikipedia.org/wiki/Authentication#Authorization)
@@ -39,14 +38,17 @@ function isAdmin(user, cb) { ... };
 *rozed* is a thin wrapper around *app*.  Call any of the express app routing
 methods on it.  *namespace* from the *express-namespace* module is also supported.
 
-The rozed router demands that you include at least one `roz` statement in any route you declare.  So
-if you forget, like this:
+If at least one grant does not fire, a 403 will be returned and the middleware after the
+roz statement will not be called.
+
+Additionally, the rozed router demands that you include at least one `roz` statement in
+any route you declare.  So if you forget, like this:
 ```js
 rozed.get( "/posts/:id", doStuff )
 ```
 You'll get an error:
 ```bash
-09:36:01 app  | Error: Rozed route does not have a roz expression: get /posts/:id
+09:36:01 app  | Error: Rozed route does not have a roz rule: get /posts/:id
 ```
 
 ### The Roz Grammar
