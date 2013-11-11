@@ -138,7 +138,7 @@ a *reqAccessor* for getting data from the request.  If a *reqAccessor* is a stri
 will use it as an arg to *req.param()*.  If *reqAccessor* is a function, the function
 is called with the request and expected to return a value.
 
-Once extracted, the values are passed to the *ruleFn* along with a callback which
+Once extracted, the values are passed to the *ruleFn* along with a callback that
 should be called with *true* or *false* (or an error).
 
 ### require("roz")(options)
