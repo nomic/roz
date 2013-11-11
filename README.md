@@ -24,12 +24,12 @@ How?
 var roz = require("roz")();  // The roz module is a callable -- call it
 
 var rozed = roz.wrap(app);   // wrap your express app
-app = null  // Recommended to prevent accidental use
+app = null;  // Recommended to prevent accidental use
 
 rozed.del( "/posts/:id",
            roz( grant( where ( isCreator, actor, "id" ))
                 grant( where ( isAdmin, actor ))),
-           ... )
+           ... );
 
 function isCreator(user, postId, cb) { ... };
 function isAdmin(user, cb) { ... };
@@ -68,7 +68,7 @@ Here's how to give anyone, including unauthenticated users, access to a route.
 ```js
 rozed.get( "/posts",
            roz( grant ( anyone )),
-           ... )
+           ...);
 ```
 
 If you only want to let authenticated users do something:
@@ -77,7 +77,7 @@ var someone = function(req) { return req.isAuthenticated(); }
 
 rozed.post( "/posts",
             roz( grant ( someone )),
-            ... )
+            ...);
 ```
 
 Note in the above you need to define *someone* yourself.  Roz is agnostic to
@@ -95,7 +95,7 @@ var isAdmin = function(user, cb) { cb(null, user.admin === true)};
 
 rozed.patch( "/posts/:id",
              roz( grant( where ( isAdmin, actor ))),
-             ... )
+             ...);
 ```
 
 Here, only the admin or the creator can delete a post.
@@ -106,7 +106,7 @@ var isCreator = function(user, postId, cb) { ... };
 rozed.del( "/posts/:id",
            roz( grant( where ( isCreator, actor, "id" ))
                 grant( where ( isAdmin, actor ))),
-           ... )
+           ...);
 ```
 
 If a `grant` fires, a subsequent `revoke` can flip authorization back
@@ -116,7 +116,7 @@ rozed.del( "/posts/:id",
            roz( grant( where ( isCreator, actor, "id" ))
                 grant( where ( isAdmin, actor ))
                 revoke( where ( deletedTooMuchAlready, actor ))),
-           ... )
+           ...);
 ```
 
 A Little More Detail
