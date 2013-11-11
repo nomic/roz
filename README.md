@@ -38,7 +38,7 @@ function isAdmin(user, cb) { ... };
 *rozed* is a thin wrapper around *app*.  Call any of the express app routing
 methods on it.  *namespace* from the *express-namespace* module is also supported.
 
-If at least one grant does not fire, a 403 will be returned and the middleware after the
+If a grant does not fire, a 403 will be returned and the middleware after the
 roz statement will not be called.
 
 Additionally, the rozed router demands that you include at least one `roz` statement in
