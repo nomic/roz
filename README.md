@@ -31,8 +31,8 @@ rozed.del( "/posts/:id",
                 grant( where ( isAdmin, actor ))),
            ... );
 
-function isCreator(user, postId, cb) { ... };
-function isAdmin(user, cb) { ... };
+function isCreator(user, postId, cb) { ... }
+function isAdmin(user, cb) { ... }
 ```
 
 *rozed* is a thin wrapper around *app*.  Call any of the express app routing
@@ -95,7 +95,7 @@ rozed.patch( "/posts/:id",
              ...);
 
 function actor(req) { return req.user; }
-function isAdmin(user, cb) { cb(null, user.admin === true)};
+function isAdmin(user, cb) { cb(null, user.admin === true) }
 ```
 
 Here, only the admin or the creator can delete a post.
@@ -105,7 +105,7 @@ rozed.del( "/posts/:id",
                 grant( where ( isAdmin, actor ))),
            ...);
 
-function isCreator(user, postId, cb) { ... };
+function isCreator(user, postId, cb) { ... }
 ```
 
 If a `grant` fires, a subsequent `revoke` can flip authorization back
