@@ -121,7 +121,7 @@ rozed.del( "/posts/:id",
 A Little More Detail
 ====================
 
-### roz(grant(...) | revoke(...) [grant(...) | revoke(...),* ] )
+### roz(grant(...)|revoke(...) [,grant(...)|revoke(...)*])
 `roz` expects one or more `grant` or `revoke` statements.  `grant`
 and `revoke` can be any function with this signature:
 fn(req, callback), where the callback takes err then result.
