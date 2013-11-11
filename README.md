@@ -21,7 +21,9 @@ gives a good explanation.
 How?
 ====
 ```js
-var roz = require("roz")();  // The roz module is a callable -- call it
+var roz = require("roz")(),  // The roz module is a callable -- call it
+    grant = roz.grant,
+    where = roz.where;
 
 var rozed = roz.wrap(app);   // wrap your express app
 app = null;  // Recommended to prevent accidental use
@@ -62,7 +64,7 @@ Roz has a short, function-based grammar for inserting middleware rules. It's a g
 idea to just import all the grammar functions so your authorization rules
 read better:
 ```js
-var roz = require("roz"),
+var roz = require("roz")(),
     grant = roz.grant,
     revoke = roz.revoke, // Since "denied" is the default, you likely won't need this
     where = roz.where,
