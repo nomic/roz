@@ -124,7 +124,8 @@ A Little More Detail
 ### roz(grant(...)|revoke(...) [,grant(...)|revoke(...)*])
 `roz` expects one or more `grant` or `revoke` statements.  Alternatively,
 `grant` and `revoke` can be replaced by any function with this signature:
-fn(req, callback), where the callback takes err then result.
+fn(req, callback), where the callback takes err then result.  The result
+is *true*, *false* or *null*.
 
 `grant` calls back with *true* (grant access) or *null* (unchanged),
 and `revoke` calls back with *false* (revoke access) or *null* (unchanged).
