@@ -39,8 +39,8 @@ function isAdmin(user, cb) { ... };
 *rozed* is a thin wrapper around *app*.  Call any of the express app routing
 methods on it.  *namespace* from the *express-namespace* module is also supported.
 
-The rozed router demands that you include at least one `roz` statement in your route.  So
-if you forget, say like this:
+The rozed router demands that you include at least one `roz` statement in any route you declare.  So
+if you forget, like this:
 ```js
 rozed.get( "/posts/:id", doStuff )
 ```
