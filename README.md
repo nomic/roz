@@ -73,11 +73,11 @@ rozed.get( "/posts",
 
 If you only want to let authenticated users do something:
 ```js
-var someone = function(req) { return req.isAuthenticated(); }
-
 rozed.post( "/posts",
             roz( grant ( someone )),
             ...);
+
+function someone(req) { return req.isAuthenticated(); }
 ```
 
 Note in the above you need to define *someone* yourself.  Roz is agnostic to
@@ -90,23 +90,22 @@ return a 401, you'll need to handle that before getting to the roz middleware.
 Use `where` for more specific rules.  In the next example, only an admin
 is allowed to edit posts.
 ```js
-var actor = function(req) { return req.user; }
-var isAdmin = function(user, cb) { cb(null, user.admin === true)};
-
 rozed.patch( "/posts/:id",
              roz( grant( where ( isAdmin, actor ))),
              ...);
+
+function actor(req) { return req.user; }
+function isAdmin(user, cb) { cb(null, user.admin === true)};
 ```
 
 Here, only the admin or the creator can delete a post.
 ```js
-
-var isCreator = function(user, postId, cb) { ... };
-
 rozed.del( "/posts/:id",
            roz( grant( where ( isCreator, actor, "id" ))
                 grant( where ( isAdmin, actor ))),
            ...);
+
+function isCreator(user, postId, cb) { ... };
 ```
 
 If a `grant` fires, a subsequent `revoke` can flip authorization back
