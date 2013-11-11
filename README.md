@@ -1,6 +1,6 @@
 roz
 ===
-Expressive and defensive authorization for express.js.
+Simple, expressive and defensive authorization for express.js.
 
 [<img src="https://raw.github.com/nomic/roz/master/roz-night-court.jpg"
      alt="The Roz Headshot"
