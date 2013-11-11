@@ -49,7 +49,7 @@ module.exports = function(opts) {
             wrapped[method] = function() {
                 var middleware = _.rest(arguments);
                 if (! _.some(middleware, isRozMiddleware)) {
-                    throw new Error( "Roz: route does not have a roz expression: " +
+                    throw new Error( "Roz: route does not have a roz rule: " +
                                      method + " " + _.first(arguments));
                 }
                 orig.apply(app, _.toArray(arguments));
