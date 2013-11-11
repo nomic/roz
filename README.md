@@ -41,8 +41,8 @@ methods on it.  *namespace* from the *express-namespace* module is also supporte
 
 If a grant does not fire, a 403 will be returned and the middleware after the
 roz statement will not be called.  Notize that roz just provides the middleware
-glue, and you can implement your custom rules in plain old javascript functions
-like *isCreator* and *isAdmin* above.
+glue.  You implement custom rules in plain old javascript functions
+like the *isAdmin* and *isCreator* examples.
 
 Roz is defensive.  In addition to defaulting to 403, rozed routers demands that you
 include at least one `roz` statement in any route you declare.  So, if you forget,
