@@ -20,6 +20,10 @@ gives a good explanation.
 
 How?
 ====
+```
+$ npm install roz
+```
+
 ```js
 var roz = require("roz")(),  // The roz module is a callable -- call it
     grant = roz.grant,
