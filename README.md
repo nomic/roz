@@ -133,7 +133,7 @@ Access is denied by default, so at least one *true* must be returned.
 
 ### where(ruleFn [, reqAccessor*])
 `where` applies a plain old javascript function, *ruleFn*, to data in the request.  You
-specify the *ruleFn*, and then for each argument,
+specify the *ruleFn*, and then, for each argument,
 a *reqAccessor* for getting data from the request.  If a *reqAccessor* is a string, `where`
 will use it as an arg to *req.param()*.  If *reqAccessor* is a function, the function
 is called with the request and expected to return a value.
@@ -142,7 +142,7 @@ Once extracted, the values are passed to the *ruleFn* along with a callback whic
 should be called with *true* or *false* (or an error).
 
 ### require("roz")(options)
-If you do not want to look up variables for your where clauses with *req.param()*,
+If you do not want to use *req.param()* to look up arguments for your where clauses,
 you can specify an alternative location on *req*, e.g., *req.validated*, like this:
 ```
 var roz = require("roz")({lookin:"validated"})
