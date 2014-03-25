@@ -65,7 +65,7 @@ module.exports = function(opts) {
     roz.grant = function(reqPredicate) {
         return function(req, cb) {
             reqPredicate(req, function(err, result) {
-                if (err) return err;
+                if (err) return cb(err);
                 return cb(null, result === true ? true : null);
             });
         };
@@ -74,7 +74,7 @@ module.exports = function(opts) {
     roz.revoke = function(reqPredicate) {
         return function(req, cb) {
             reqPredicate(req, function(err, result) {
-                if (err) return err;
+                if (err) return cb(err);
                 return cb(null, result === true ? false : null);
             });
         };
