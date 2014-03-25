@@ -33,7 +33,7 @@ var rozed = roz.wrap(app);   // wrap your express app
 app = null;  // Recommended to prevent accidental use
 
 rozed.del( "/posts/:id",
-           roz( grant( where ( isCreator, actor, "id" ))
+           roz( grant( where ( isCreator, actor, "id" )),
                 grant( where ( isAdmin, actor ))),
            ... );
 
@@ -50,7 +50,7 @@ roz statement will not be called.  Notice that roz just provides middleware
 glue.  You implement custom rules in plain old javascript functions
 like the *isAdmin* and *isCreator* examples.
 
-Roz is defensive.  In addition to defaulting to 403, rozed routers demands that you
+Roz is defensive.  In addition to defaulting to 403, rozed routers demand that you
 include at least one `roz` statement in any route you declare.  So, if you forget,
 like this:
 
@@ -82,7 +82,7 @@ rozed.get( "/posts",
            ...);
 ```
 
-If you only want to let authenticated users do something:
+If you only want to let in authenticated users, do something like this:
 ```js
 rozed.post( "/posts",
             roz( grant ( someone )),
@@ -112,7 +112,7 @@ function isAdmin(user, cb) { cb(null, user.admin === true) }
 Here, only the admin or the creator can delete a post.
 ```js
 rozed.del( "/posts/:id",
-           roz( grant( where ( isCreator, actor, "id" ))
+           roz( grant( where ( isCreator, actor, "id" )),
                 grant( where ( isAdmin, actor ))),
            ...);
 
@@ -123,8 +123,8 @@ If a `grant` fires, a subsequent `revoke` can flip authorization back
 to denied.
 ```js
 rozed.del( "/posts/:id",
-           roz( grant( where ( isCreator, actor, "id" ))
-                grant( where ( isAdmin, actor ))
+           roz( grant( where ( isCreator, actor, "id" )),
+                grant( where ( isAdmin, actor )),
                 revoke( where ( deletedTooMuchAlready, actor ))),
            ...);
 ```
