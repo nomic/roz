@@ -48,12 +48,13 @@ module.exports = function(opts) {
         _.each(methods, function(method) {
             var orig = app[method];
             wrapped[method] = function() {
-                var middleware = _.rest(arguments);
+                var args = _.flatten(_.toArray(arguments));
+                var middleware = _.rest(args);
                 if (! _.some(middleware, isRozMiddleware)) {
                     throw new Error( "Roz: route does not have a roz rule: " +
                                      method + " " + _.first(arguments));
                 }
-                orig.apply(app, _.toArray(arguments));
+                orig.apply(app, args);
             };
         });
         if (app.namespace) {
